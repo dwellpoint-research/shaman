@@ -1,0 +1,154 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "GPU ProcessVideo",
+            "request": "launch",
+            "mainClass": "org.shaman.av.gpu.ProcessVideo",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "GPU Naive Bayes",
+            "request": "launch",
+            "mainClass": "org.shaman.spatial.CoreNaiveBayesGPU",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "AV AudioApp",
+            "request": "launch",
+            "mainClass": "org.shaman.av.gui.AudioApp",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "AV VideoApp",
+            "request": "launch",
+            "mainClass": "org.shaman.av.gui.VideoApp",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "Evolution Experiments",
+            "request": "launch",
+            "mainClass": "org.shaman.evolution.Experiments",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "Evolution FitnessLog",
+            "request": "launch",
+            "mainClass": "org.shaman.evolution.FitnessLogFrame",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "DAIS Paper",
+            "request": "launch",
+            "mainClass": "org.shaman.immune.network.TestNet",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "Neural Experiments",
+            "request": "launch",
+            "mainClass": "org.shaman.neural.Experiments",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "Random Forest Experiments",
+            "request": "launch",
+            "mainClass": "org.shaman.rule.Experiments",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "Random Forest Tests",
+            "request": "launch",
+            "mainClass": "org.shaman.rule.weka.CoreRandomForestTest",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "PSBML Clustering",
+            "request": "launch",
+            "mainClass": "org.shaman.spatial.ClusteringPSBML",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "PSBML Instance migration",
+            "request": "launch",
+            "mainClass": "org.shaman.spatial.InstanceMigration",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "PSBML Classification",
+            "request": "launch",
+            "mainClass": "org.shaman.spatial.SpatialEnsembleLearning",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "PSBML GPU",
+            "request": "launch",
+            "mainClass": "org.shaman.spatial.SpatialEnsembleLearningGPU",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "Shaman MNIST",
+            "request": "launch",
+            "mainClass": "org.shaman.test.DigitCase",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "Text Experiments",
+            "request": "launch",
+            "mainClass": "org.shaman.text.Experiments",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "Jinngine BasicExample",
+            "request": "launch",
+            "mainClass": "jinngine.examples.BasicExample",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "Jinngine CapsuleExample",
+            "request": "launch",
+            "mainClass": "jinngine.examples.CapsuleExample",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "Jinngine RagdollExample",
+            "request": "launch",
+            "mainClass": "jinngine.examples.RagdollExample",
+            "projectName": "shaman"
+        },
+        {
+            "type": "java",
+            "name": "Jinngine TriggerExample",
+            "request": "launch",
+            "mainClass": "jinngine.examples.TriggerExample",
+            "projectName": "shaman"
+        },
+    ]
+}

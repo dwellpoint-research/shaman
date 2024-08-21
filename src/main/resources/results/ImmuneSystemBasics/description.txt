@@ -1,0 +1,11 @@
+Output of org.shaman.immune.core.TestBody.testBitRandom()
+
+Basic Artificial Immune System simulation.
+Shows probability of change-detection for a
+- self-set of 100 strings of 32 bits 
+- with match-length = 8
+for a varying number of antibodies.
+
+ais_random_01.txt   Output with change-length = 1  bit
+ais_random_03.txt   Output with change-length = 3  neighboring bits
+ais_random_10.txt   Output with change-length = 10 neighboring bits

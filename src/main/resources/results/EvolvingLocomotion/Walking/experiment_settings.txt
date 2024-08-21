@@ -1,0 +1,28 @@
+Phenotype
+---------
+Figure with body and 2 arms. Both arms have same dimensions and connected to body with a universal joint with 2 degrees of freedom.
+Body is a cube, arms are boxes.
+ 
+With control neural network: 
+
+Sensor layer : contact with floor, joint angels and velocities, sine wave 
+Neural Net: 10 neurons -> 7 neurons. Fully connected MLP  with TanH(1.0) activation function
+Output layer: Target velocity for the 2 degrees of freedom of the joints. 
+
+Genotype
+--------
+Neuron to neuron weights between the 4 layers: sensor -> hidden1 -> hidden2 -> motor.
+Dimensions of body cube, arms boxes. 
+
+Evolution
+---------
+100 Generation with settings:
+
+evo.setPopulationSize(100);
+evo.setPCrossover(0.8);
+evo.setPMutation(0.01);
+evo.setNumberOfThreads(3);
+evo.setFitnessScale(Evolution.FITNESS_SCALE_RANK);
+//evo.setSurvivalFraction(0.2);
+//Graph islands = evo.makeIslandsGrid(3);
+//evo.setIslandParameters(islands, 5, 0.2);

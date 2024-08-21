@@ -1,0 +1,212 @@
+/*********************************************************\
+ *                                                       *
+ *                     S H A M A N                       *
+ *                   R E S E A R C H                     *
+ *                                                       *
+ *                                                       *
+ *                                                       *
+ *                                                       *
+ *  by Johan Kaers  (johankaers@gmail.com)               *
+ *  Copyright (c) 2002-5 Shaman Research                 *
+\*********************************************************/
+package org.shaman.neural;
+
+
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import org.shaman.dataflow.Persister;
+import org.shaman.datamodel.Attribute;
+import org.shaman.datamodel.DataModel;
+import org.shaman.datamodel.DataModelPropertyLearning;
+import org.shaman.datamodel.DataModelPropertyVectorType;
+import org.shaman.exceptions.ConfigException;
+import org.shaman.exceptions.DataFlowException;
+import org.shaman.exceptions.LearnerException;
+import org.shaman.learning.Classifier;
+import org.shaman.learning.ClassifierTransformation;
+import org.shaman.learning.Presenter;
+
+import cern.colt.matrix.DoubleMatrix1D;
+import cern.colt.matrix.ObjectMatrix1D;
+
+
+/**
+ * <h2>Multi-Layer Perceptron Neural Network</h2>
+ * MLP used for classification
+ **/
+// **********************************************************\
+// *    Multi-Layer Perceptron Neural Network Classifier    *
+// **********************************************************/
+public class MLPClassifier extends ClassifierTransformation implements Classifier, Persister
+{
+    // The Multi-Layer Neural Network
+    private MLP    mlp;
+    
+    // **********************************************************\
+    // *      Classification using a trained Neural Net         *
+    // **********************************************************/
+    public int classify(DoubleMatrix1D instance, double[]confidence) throws LearnerException
+    {
+        int      i;
+        double []inbuf;
+        double []outbuf;
+        int      opos;
+        double   omax;
+        NeuralNet net;
+        
+        inbuf  = new double[this.mlp.getInputSize()];
+        outbuf = new double[this.mlp.getOutputSize()];
+        opos   = -1;
+        
+        // Feed input data through network
+        net = this.mlp.getNeuralNet();
+        instance.toArray(inbuf);
+        net.setInput(inbuf);
+        net.updateSynchronous();
+        net.getOutput(outbuf);
+        
+        // Find output with highest activation
+        omax = Double.NEGATIVE_INFINITY; opos = -1;
+        for (i=0; i<outbuf.length; i++)
+        {
+            if (outbuf[i] > omax) { omax = outbuf[i]; opos = i; }
+        }
+        
+        // Put output values in confidence vector if given
+        if (confidence != null)
+        {
+            for (i=0; i<confidence.length; i++) confidence[i] = outbuf[i];
+        }
+        
+        return(opos);
+    }
+    
+    public int classify(ObjectMatrix1D instance, double[]confidence) throws LearnerException
+    {
+        throw new LearnerException("Cannot classify Object based data");
+    }
+    
+    // **********************************************************\
+    // *                Parameter Configuration                 *
+    // **********************************************************/
+    public void setMLP(MLP mlp)
+    {
+        this.mlp = mlp;
+    }
+    
+    public MLP getMLP()
+    {
+        return(this.mlp);
+    }
+    
+    // **********************************************************\
+    // *             Transformation Implementation              *
+    // **********************************************************/
+    public void init() throws ConfigException
+    {
+        // Standard Classifier initialization
+        super.init();
+    }
+    
+    public void checkDataModelFit(int port, DataModel dm) throws ConfigException
+    {
+        Attribute []actatt;
+        int         i;
+        DataModel   dmin;
+        
+        dmin = dm;
+        
+        // Check if the input is primitive
+        if (!dmin.getVectorTypeProperty().equals(DataModelPropertyVectorType.doubleVector))
+            throw new ConfigException("Primitive input data required.");
+        
+        // Check continuous data attribute property
+        actatt = dmin.getActiveAttributes();
+        for (i=0; i<actatt.length; i++)
+        {
+            if (!actatt[i].hasProperty(Attribute.PROPERTY_CONTINUOUS))
+                throw new ConfigException("Continuous input data expected. Attribute '"+actatt[i].getName()+"' is not continuous.");
+        }
+        
+        // Check if there is a classification goal.
+        DataModelPropertyLearning learn;
+        
+        learn = dmin.getLearningProperty();
+        if (!learn.getHasGoal())
+            throw new ConfigException("Input requires a goal. Can't find one.");
+        if (dmin.getAttribute(learn.getGoalIndex()).getGoalType() == Attribute.GOAL_VALUE)
+            throw new ConfigException("Input contains a goal, but not a classification goal.");
+    }
+    
+    public void cleanUp() throws DataFlowException
+    {
+        this.mlp = null;
+    }
+    
+    // **********************************************************\
+    // *                    Learner Interface                   *
+    // **********************************************************/
+    public void initializeTraining() throws LearnerException
+    {
+        // Create a network according to the parameters, datamodels, etc...
+        this.mlp.create();
+        
+        // Create all buffers for Back-Propagation training
+        this.mlp.initBackPropagation();
+    }
+    public void train() throws LearnerException
+    {
+        // Train a number of epochs.
+        this.mlp.backPropagation();
+    }
+    
+    public Presenter getTrainSet()
+    {
+        return(this.mlp.getTrainSet());
+    }
+    
+    public void setTrainSet(Presenter instances) throws LearnerException
+    {
+        try
+        {
+            // First make sure the data is in the right format.
+            checkDataModelFit(0, instances.getDataModel());
+            
+            // Give the data to the MLP
+            this.mlp.setTrainSet(instances);
+        }
+        catch(ConfigException ex) { throw new LearnerException(ex); }
+    }
+    
+    public boolean isSupervised()
+    {
+        return(true);
+    }
+    
+    // **********************************************************\
+    // *             State Persistence Implementation           *
+    // **********************************************************/
+    public void loadState(ObjectInputStream oin) throws ConfigException
+    {
+        super.loadState(oin);
+        if (this.mlp == null) this.mlp = new MLP();
+        this.mlp.loadState(oin);
+    }
+    
+    public void saveState(ObjectOutputStream oout) throws ConfigException
+    {
+        super.saveState(oout);
+        this.mlp.saveState(oout);
+    }
+    
+    // **********************************************************\
+    // *                    Construction                        *
+    // **********************************************************/
+    public MLPClassifier()
+    {
+        super();
+        name        = "MLPClassifier";
+        description = "Multi-Layer Neural Network with 0, 1 or 2 fully connected hidden layers used for classification.";
+    }
+}

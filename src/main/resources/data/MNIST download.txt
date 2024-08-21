@@ -1,0 +1,2 @@
+Download MNISt dataset from:
+https://yann.lecun.com/exdb/mnist/

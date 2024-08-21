@@ -1,0 +1,15 @@
+Output of org.shaman.neural.Experiments.networkStimuli()
+
+Reproduces the results of figure 1 of
+
+   Yaneer Bar-Yam, Irving R. Epstein : "Response of complex networks to stimuli"
+      PNAS vol. 101, no. 13, March 30, 2004. p4341-4345
+
+using the org.shaman.neural package.
+
+Basin of attraction histograms for
+
+* Scale-free graph, random stimuli    : basin_histogram_scalefree_random.txt
+* Scale-free graph, directed stimuli  : basin_histogram_scalefree_directed.txt
+* Exponential graph, random stimuli   : basin_histogram_exponential_random.txt
+* Exponential graph, directed stimuli : basin_histogram_exponential_directed.txt
