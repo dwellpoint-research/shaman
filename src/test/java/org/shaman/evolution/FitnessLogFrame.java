@@ -14,9 +14,9 @@ import java.awt.*;
 public class FitnessLogFrame extends JFrame implements Runnable
 {
     // Fear and Loathing in Las Vegas
-    private static final String GOAL = "we were somewhere around barstow on the edge of the desert when the drugs began to take hold i remember saying something like I feel a bit lightheaded maybe you should drive and suddenly there was a terrible roar all around us and the sky was full of what looked like huge bats all swooping and screeching and diving around the car which was going about a hundred miles an hour with the top down to las vegas"; // And a voice was screaming: \"Holy Jesus! What are these goddamn animals?\""
+    //private static final String GOAL = "we were somewhere around barstow on the edge of the desert when the drugs began to take hold i remember saying something like I feel a bit lightheaded maybe you should drive and suddenly there was a terrible roar all around us and the sky was full of what looked like huge bats all swooping and screeching and diving around the car which was going about a hundred miles an hour with the top down to las vegas"; // And a voice was screaming: \"Holy Jesus! What are these goddamn animals?\""
     // Blade Runner
-    //private static final String GOAL = "the facts of life to make an alteration in the evolvement of an organic life system is fatal a coding sequence cannot be revised once it s been established";
+    private static final String GOAL = "the facts of life to make an alteration in the evolvement of an organic life system is fatal a coding sequence cannot be revised once it s been established";
     
     private Evolution evolution;
     private FitnessLogPanel fitnessLogPanel;
